@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "428199118023",
+    "project_id": "mero-pasal-vyavasthapan",
+    "storage_bucket": "mero-pasal-vyavasthapan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428199118023:android:327664a845618f687daae2",
+        "android_client_info": {
+          "package_name": "np.com.alokmishra.store_management_system"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8VBGEmyUVdT-a6baT9qodNKGXf3aO_DM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
