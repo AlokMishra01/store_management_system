@@ -1,11 +1,11 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'auth_gate.dart';
 import 'providers/theme_provider.dart';
-import 'themes/global_theme_data.dart';
 
-class App extends ConsumerWidget  {
+class App extends ConsumerWidget {
   const App({super.key});
 
   @override
@@ -17,8 +17,8 @@ class App extends ConsumerWidget  {
       debugShowCheckedModeBanner: false,
       title: 'Store Management App',
       themeMode: themeMode,
-      theme: GlobalThemData.lightThemeData,
-      darkTheme: GlobalThemData.darkThemeData,
+      theme: FlexThemeData.light(scheme: FlexScheme.jungle),
+      darkTheme: FlexThemeData.dark(scheme: FlexScheme.jungle),
       home: const AuthGate(),
     );
   }
