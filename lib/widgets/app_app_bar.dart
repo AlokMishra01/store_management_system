@@ -34,17 +34,6 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
         ),
       ],
     );
-    return AppBar(
-      title: const Text('Home'),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.logout),
-          onPressed: () async {
-            await authService.signOut();
-          },
-        ),
-      ],
-    );
   }
 
   @override
