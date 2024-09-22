@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'store_repository_provider.dart';
+import '../store_repository_provider.dart';
 
 class RemoveStoreNotifier extends StateNotifier<AsyncValue<void>> {
   RemoveStoreNotifier(this.ref) : super(const AsyncValue.data(null));

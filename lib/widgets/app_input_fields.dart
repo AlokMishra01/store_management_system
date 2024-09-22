@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hugeicons/hugeicons.dart';
 
 class AppInputFields {
-  // Function to handle input decoration for all types of input fields
+  /// Function to handle input decoration for all types of input fields
   static InputDecoration _buildInputDecoration({
+    required String label,
     required String placeholder,
     String? error,
     IconData? suffix,
     IconData? prefix,
   }) {
     return InputDecoration(
+      labelText: label,
       hintText: placeholder,
       filled: true,
       border: OutlineInputBorder(
@@ -18,12 +19,9 @@ class AppInputFields {
       ),
       errorText: error,
       contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-      prefix: prefix != null
-          ? Icon(HugeIcons.strokeRoundedStore01, size: 20.0)
-          : null,
-      suffix: suffix != null
-          ? Icon(HugeIcons.strokeRoundedStore01, size: 24.0)
-          : null,
+      prefixIconConstraints: BoxConstraints(minWidth: 48.w, minHeight: 48.h),
+      prefixIcon: prefix != null ? Icon(prefix) : null,
+      suffixIcon: suffix != null ? Icon(suffix) : null,
     );
   }
 
@@ -35,12 +33,15 @@ class AppInputFields {
     String? error,
     IconData? suffix,
     IconData? prefix,
+    Function(String)? onChanged,
   }) {
     return SizedBox(
       height: 52.h,
       child: TextFormField(
         controller: controller,
+        onChanged: onChanged,
         decoration: _buildInputDecoration(
+          label: label,
           placeholder: placeholder,
           error: error,
           prefix: prefix,
@@ -95,19 +96,30 @@ class AppInputFields {
   //   );
   // }
   //
-  // // Static method for Text Area
-  // static Widget textArea({
-  //   required String label,
-  //   TextEditingController? controller,
-  //   int maxLines = 4,
-  //   required ThemeData theme,
-  // }) {
-  //   return TextFormField(
-  //     controller: controller,
-  //     maxLines: maxLines,
-  //     decoration: _buildInputDecoration(label: label, theme: theme),
-  //   );
-  // }
+  // Static method for Text Area
+  static Widget textArea({
+    required String label,
+    required String placeholder,
+    TextEditingController? controller,
+    String? error,
+    int maxLines = 5,
+    IconData? suffix,
+    IconData? prefix,
+    Function(String)? onChanged,
+  }) {
+    return TextFormField(
+      controller: controller,
+      onChanged: onChanged,
+      maxLines: maxLines,
+      decoration: _buildInputDecoration(
+        label: label,
+        placeholder: placeholder,
+        error: error,
+        prefix: prefix,
+        suffix: suffix,
+      ),
+    );
+  }
   //
   // // Static method for Phone Input
   // static Widget phoneInput({

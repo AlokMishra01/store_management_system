@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'store_repository_provider.dart';
+import '../store_repository_provider.dart';
 
 class UpdateStoreNotifier extends StateNotifier<AsyncValue<void>> {
   UpdateStoreNotifier(this.ref) : super(const AsyncValue.data(null));

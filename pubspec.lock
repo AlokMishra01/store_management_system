@@ -408,6 +408,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
+  go_router:
+    dependency: "direct main"
+    description:
+      name: go_router
+      sha256: "2ddb88e9ad56ae15ee144ed10e33886777eb5ca2509a914850a5faa7b52ff459"
+      url: "https://pub.dev"
+    source: hosted
+    version: "14.2.7"
   google_fonts:
     dependency: "direct main"
     description:
@@ -648,14 +656,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
-  logger:
-    dependency: "direct main"
+  logging:
+    dependency: transitive
     description:
-      name: logger
-      sha256: "697d067c60c20999686a0add96cf6aba723b3aa1f83ecf806a8097231529ec32"
+      name: logging
+      sha256: "623a88c9594aa774443aa3eb2d41807a48486b5613e67599fb4c41c0ad47c340"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0"
+    version: "1.2.0"
   mask_text_input_formatter:
     dependency: transitive
     description:

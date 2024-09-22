@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../repositories/store_repository.dart';
+import '../repositories/store_repository.dart';
 
-// Create a provider for the store repository
+/// Store repository provider
 final storeRepositoryProvider = Provider(
   (ref) => StoreRepository(),
 );

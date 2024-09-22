@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:store_management_system/widgets/app_app_bar.dart';
 
 import '../providers/bottom_nav_bar_provider.dart';
-import '../widgets/app_app_bar.dart';
 import '../widgets/app_bottom_navigation_bar.dart';
 import 'customers_screen.dart';
 import 'dashboard_screen.dart';
@@ -18,27 +18,31 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = ref.watch(bottomNavBarNotifierProvider);
     return Scaffold(
-      appBar: const AppAppBar(title: 'Dashboard'),
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 500),
-        transitionBuilder: (Widget child, Animation<double> animation) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(0, 1), // Slide from bottom to top
-              end: const Offset(0, 0), // Final position is on screen
-            ).animate(animation),
-            child: child,
-          );
-        }, // The page content
-        switchInCurve: Curves.easeInOut,
-        switchOutCurve: Curves.easeInOut,
-        child: [
-          const DashboardScreen(),
-          const InventoryScreen(),
-          const SalesScreen(),
-          const CustomersScreen(),
-          const SettingsScreen()
-        ][currentIndex],
+      body: Stack(
+        children: [
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              return SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(0, 1), // Slide from bottom to top
+                  end: const Offset(0, 0), // Final position is on screen
+                ).animate(animation),
+                child: child,
+              );
+            }, // The page content
+            switchInCurve: Curves.easeInOut,
+            switchOutCurve: Curves.easeInOut,
+            child: [
+              const DashboardScreen(),
+              const InventoryScreen(),
+              const SalesScreen(),
+              const CustomersScreen(),
+              const SettingsScreen()
+            ][currentIndex],
+          ),
+          const AppAppBar(),
+        ],
       ),
       floatingActionButton: AnimatedOpacity(
         opacity: currentIndex > 0 && currentIndex < 4 ? 1.0 : 0.0,

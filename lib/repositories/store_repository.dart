@@ -1,4 +1,5 @@
-import 'package:logger/logger.dart';
+import 'package:fp_util/fp_util.dart';
+import 'package:store_management_system/dtos/store_dto.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class StoreRepository {
@@ -15,7 +16,7 @@ class StoreRepository {
 
       return response != null;
     } catch (error, stacktrace) {
-      Logger().e(
+      Logger.e(
         'Error fetching store: $error',
         error: error,
         stackTrace: stacktrace,
@@ -25,17 +26,23 @@ class StoreRepository {
   }
 
   /// Get details of the store
-  Future<Map<String, dynamic>?> getStoreDetails(String userId) async {
+  Future<Map<String, dynamic>?> getStoreDetails() async {
+    /// Get the current authenticated user
+    final user = supabase.auth.currentUser;
+    if (user == null) {
+      throw Exception("User not authenticated");
+    }
+
     try {
       final response = await supabase
           .from('stores')
           .select('*')
-          .eq('user_id', userId)
+          .eq('user_id', user.id)
           .single();
 
       return response;
     } catch (error, stacktrace) {
-      Logger().e(
+      Logger.e(
         'Error fetching store details: $error',
         error: error,
         stackTrace: stacktrace,
@@ -45,25 +52,19 @@ class StoreRepository {
   }
 
   /// Add a new store
-  Future<void> addStore(
-    String name,
-    String description,
-    String address,
-    String location,
-    String userId,
-  ) async {
+  Future<void> addStore(StoreDto store) async {
     try {
       final response = await supabase.from('stores').insert({
-        'name': name,
-        'description': description,
-        'address': address,
-        'location': location,
-        'user_id': userId,
+        'name': store.name,
+        'phone': store.name,
+        'description': store.description,
+        'address': store.address,
+        'location': store.location,
       }).select();
 
-      Logger().i('Store added successfully: $response');
+      Logger.i('Store added successfully: $response');
     } catch (error, stacktrace) {
-      Logger().e(
+      Logger.e(
         'Error adding store: $error',
         error: error,
         stackTrace: stacktrace,
@@ -91,9 +92,9 @@ class StoreRepository {
           .eq('id', storeId)
           .select(); // Add select() to return the updated store
 
-      Logger().i('Store updated successfully: $response');
+      Logger.i('Store updated successfully: $response');
     } catch (error, stacktrace) {
-      Logger().e(
+      Logger.e(
         'Error updating store: $error',
         error: error,
         stackTrace: stacktrace,
@@ -113,9 +114,9 @@ class StoreRepository {
           )
           .select();
 
-      Logger().i('Store deleted successfully: $response');
+      Logger.i('Store deleted successfully: $response');
     } catch (error, stacktrace) {
-      Logger().e(
+      Logger.e(
         'Error deleting store: $error',
         error: error,
         stackTrace: stacktrace,

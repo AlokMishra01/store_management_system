@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'auth_gate.dart';
+import 'providers/go_router_provider.dart';
 import 'providers/theme_provider.dart';
 
 class App extends ConsumerWidget {
@@ -14,12 +14,13 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     /// Watch the current theme mode
     final themeMode = ref.watch(themeNotifierProvider);
+    final goRouter = ref.watch(goRouterProvider);
 
     return ScreenUtilInit(
       designSize: const Size(402, 874),
       minTextAdapt: true,
       builder: (_, child) {
-        return MaterialApp(
+        return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'Store Management App',
           themeMode: themeMode,
@@ -31,10 +32,11 @@ class App extends ConsumerWidget {
             scheme: FlexScheme.jungle,
             textTheme: GoogleFonts.notoSansTextTheme(),
           ),
-          home: child,
+          routerDelegate: goRouter.routerDelegate,
+          routeInformationParser: goRouter.routeInformationParser,
+          routeInformationProvider: goRouter.routeInformationProvider,
         );
       },
-      child: const AuthGate(),
     );
   }
 }
