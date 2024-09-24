@@ -60,6 +60,7 @@ class StoreRepository {
         'description': store.description,
         'address': store.address,
         'location': store.location,
+        'store_cover': store.storeCover,
       }).select();
 
       Logger.i('Store added successfully: $response');

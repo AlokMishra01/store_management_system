@@ -4,6 +4,7 @@ class StoreFormState {
   final String address;
   final String? description;
   final String? location;
+  final String? storeCover;
   final bool isLoading;
   final bool isFormValid;
 
@@ -13,6 +14,7 @@ class StoreFormState {
     this.address = '',
     this.description,
     this.location,
+    this.storeCover,
     this.isLoading = false,
     this.isFormValid = false,
   });
@@ -23,6 +25,7 @@ class StoreFormState {
     String? description,
     String? address,
     String? location,
+    String? storeCover,
     bool? isLoading,
     bool? isFormValid,
   }) {
@@ -32,6 +35,7 @@ class StoreFormState {
       description: description ?? this.description,
       address: address ?? this.address,
       location: location ?? this.location,
+      storeCover: storeCover ?? this.storeCover,
       isLoading: isLoading ?? this.isLoading,
       isFormValid: isFormValid ?? this.isFormValid,
     );
