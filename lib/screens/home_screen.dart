@@ -18,31 +18,27 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = ref.watch(bottomNavBarNotifierProvider);
     return Scaffold(
-      body: Stack(
-        children: [
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 500),
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              return SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(0, 1), // Slide from bottom to top
-                  end: const Offset(0, 0), // Final position is on screen
-                ).animate(animation),
-                child: child,
-              );
-            }, // The page content
-            switchInCurve: Curves.easeInOut,
-            switchOutCurve: Curves.easeInOut,
-            child: [
-              const DashboardScreen(),
-              const InventoryScreen(),
-              const SalesScreen(),
-              const CustomersScreen(),
-              const SettingsScreen()
-            ][currentIndex],
-          ),
-          const AppAppBar(),
-        ],
+      appBar: const AppAppBar(),
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 500),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 1), // Slide from bottom to top
+              end: const Offset(0, 0), // Final position is on screen
+            ).animate(animation),
+            child: child,
+          );
+        }, // The page content
+        switchInCurve: Curves.easeInOut,
+        switchOutCurve: Curves.easeInOut,
+        child: [
+          const DashboardScreen(),
+          const InventoryScreen(),
+          const SalesScreen(),
+          const CustomersScreen(),
+          const SettingsScreen()
+        ][currentIndex],
       ),
       floatingActionButton: AnimatedOpacity(
         opacity: currentIndex > 0 && currentIndex < 4 ? 1.0 : 0.0,

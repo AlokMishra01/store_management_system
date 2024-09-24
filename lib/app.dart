@@ -23,6 +23,9 @@ class App extends ConsumerWidget {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'Store Management App',
+          scrollBehavior: const ScrollBehavior().copyWith(
+            physics: const BouncingScrollPhysics(),
+          ),
           themeMode: themeMode,
           theme: FlexThemeData.light(
             scheme: FlexScheme.jungle,
