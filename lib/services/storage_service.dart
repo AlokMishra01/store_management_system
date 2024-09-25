@@ -23,8 +23,9 @@ class StorageService {
   }
 
   /// Get public URL for file (so anyone can view it)
-  String getPublicUrl(String bucketName, String path) {
-    final url = supabase.storage.from(bucketName).getPublicUrl(path);
+  Future<String> getPublicUrl(String bucketName, String path) async {
+    final url =
+        await supabase.storage.from(bucketName).createSignedUrl(path, 600);
     return url;
   }
 

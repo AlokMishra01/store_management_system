@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,31 +21,32 @@ class SettingsScreen extends ConsumerWidget {
     final storeDetailsAsync = ref.watch(storeDetailsProvider);
     final storageRepository = ref.read(storageRepositoryProvider);
 
+    final userData = asyncUser.maybeWhen(
+      data: (user) => user,
+      orElse: () => null,
+    );
     return Scrollbar(
       radius: 8.circularRadius,
       child: SingleChildScrollView(
         child: Column(
           children: [
             16.gap,
-            CircleAvatar(radius: 64.r),
+            CircleAvatar(
+              radius: 64.r,
+              backgroundImage: CachedNetworkImageProvider(
+                userData?.userMetadata?['avatar_url'],
+              ),
+            ),
             16.gap,
             Text(
-              'Alok Mishra',
+              userData?.userMetadata?['full_name'] ?? 'Loading...',
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              'alokmishra@gmail.com',
-              style: TextStyle(
-                color: theme.colorScheme.onPrimary.withOpacity(0.6),
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Text(
-              '+977-9869050723',
+              userData?.email ?? 'Loading...',
               style: TextStyle(
                 color: theme.colorScheme.onPrimary.withOpacity(0.6),
                 fontSize: 14.sp,
@@ -53,7 +55,9 @@ class SettingsScreen extends ConsumerWidget {
             ),
             8.gap,
             OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                authService.signOut();
+              },
               style: OutlinedButton.styleFrom(
                 side: BorderSide(
                   width: 1.sp,
@@ -101,10 +105,23 @@ class SettingsScreen extends ConsumerWidget {
                       borderRadius: 8.circular,
                       child: AspectRatio(
                         aspectRatio: 16 / 9,
-                        child: Image.network(
-                          storageRepository.getPublicUrl(
-                              'store', store!['store_cover']),
-                          fit: BoxFit.cover,
+                        child: FutureBuilder(
+                          future: storageRepository.getPublicUrl(
+                            'store',
+                            store!['store_cover'],
+                          ),
+                          builder: (context, snapshot) {
+                            return CachedNetworkImage(
+                              imageUrl: snapshot.data ?? '',
+                              fit: BoxFit.cover,
+                              cacheKey: store['store_cover'],
+                              errorWidget: (_, __, ___) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              },
+                            );
+                          },
                         ),
                       ),
                     ),
